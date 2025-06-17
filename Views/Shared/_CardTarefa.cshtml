@@ -1,0 +1,34 @@
+@model gerenciadorTarefas.Models.TarefaModel
+@using gerenciadorTarefas.Enums
+
+<div class="card mb-3 border shadow-sm">
+    <div class="card-body">
+        <p><strong>Descrição:</strong> @Model.Descricao</p>
+        <p><strong>Setor:</strong> @Model.Setor</p>
+        <p>
+            <strong>Prioridade:</strong>
+            <span
+                class="badge bg-@(Model.Prioridade == "Alta" ? "danger" : Model.Prioridade == "Média" ? "warning text-dark" : "secondary")">
+                @Model.Prioridade
+            </span>
+        </p>
+
+        <form asp-action="AtualizarEstado" method="post" class="mb-2">
+            <input type="hidden" name="Id" value="@Model.Id" />
+            <select name="State" class="form-select form-select-sm" onchange="this.form.submit()">
+                @foreach (EstadoTarefa status in Enum.GetValues(typeof(EstadoTarefa)))
+                {
+                    <option value="@status" selected="@(Model.State == status ? "selected" : null)">
+                        @status
+                    </option>
+                }
+            </select>
+        </form>
+
+        <a asp-action="GestaoTarefa" asp-route-id="@Model.Id" class="btn btn-sm btn-primary">Editar</a>
+        <a asp-action="ExcluirTarefa" asp-route-id="@Model.Id" class="btn btn-sm btn-danger"
+            onclick="return confirm('Tem certeza que deseja excluir esta tarefa?');">
+            Excluir
+        </a>
+    </div>
+</div>

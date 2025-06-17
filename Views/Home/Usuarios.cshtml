@@ -1,0 +1,67 @@
+@model List<gerenciadorTarefas.Models.UsuarioModel>
+
+@{
+    ViewData["Title"] = "Gestão de Usuários";
+    var usuarioEdicao = ViewBag.UsuarioEdicao as gerenciadorTarefas.Models.UsuarioModel;
+    bool editando = usuarioEdicao != null;
+}
+
+<h3 class="text-center text-primary mb-4">@ViewData["Title"]</h3>
+
+<div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+        @(editando ? "Editar Usuário" : "Cadastrar Novo Usuário")
+    </div>
+    <div class="card-body">
+        <form asp-action="SalvarUsuario" method="post">
+            @if (editando)
+            {
+                <input type="hidden" name="Id" value="@usuarioEdicao.Id" />
+            }
+
+            <div class="mb-3">
+                <label class="form-label">Nome</label>
+                <input name="Nome" class="form-control" value="@(editando? usuarioEdicao.Nome: "")" required />
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input name="Email" class="form-control" type="email" value="@(editando? usuarioEdicao.Email: "")"
+                    required />
+            </div>
+
+            <button type="submit" class="btn btn-success">
+                @(editando ? "Atualizar" : "Cadastrar")
+            </button>
+
+            @if (editando)
+            {
+                <a asp-action="GestaoUsuario" class="btn btn-secondary ms-2">Cancelar</a>
+            }
+        </form>
+    </div>
+</div>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-light">
+        <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th style="width: 160px;">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var usuario in Model)
+        {
+            <tr>
+                <td>@usuario.Nome</td>
+                <td>@usuario.Email</td>
+                <td>
+                    <a asp-action="GestaoUsuario" asp-route-id="@usuario.Id" class="btn btn-sm btn-warning me-2">Editar</a>
+                    <a asp-action="ExcluirUsuario" asp-route-id="@usuario.Id" class="btn btn-sm btn-danger"
+                        onclick="return confirm('Tem certeza que deseja excluir este usuário?');">Excluir</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

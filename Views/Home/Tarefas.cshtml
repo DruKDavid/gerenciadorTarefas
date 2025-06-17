@@ -1,0 +1,66 @@
+﻿@model gerenciadorTarefas.ViewModels.TarefaUsuarioViewModel
+
+@{
+    ViewData["Title"] = "Cadastro de Tarefas";
+}
+
+<h3 class="text-center text-primary">@ViewData["Title"]</h3>
+
+<form asp-action="CriarTarefa" method="post">
+    <div class="mb-3">
+        <label asp-for="Tarefa.Descricao" class="form-label"></label>
+        <input asp-for="Tarefa.Descricao" class="form-control" />
+        <span asp-validation-for="Tarefa.Descricao" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Tarefa.Setor" class="form-label"></label>
+        <input asp-for="Tarefa.Setor" class="form-control" />
+        <span asp-validation-for="Tarefa.Setor" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Tarefa.Prioridade" class="form-label"></label>
+        <select asp-for="Tarefa.Prioridade" class="form-control">
+            <option value="">Selecione</option>
+            <option>Alta</option>
+            <option>Média</option>
+            <option>Baixa</option>
+        </select>
+        <span asp-validation-for="Tarefa.Prioridade" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Tarefa.State" class="form-label"></label>
+        <select asp-for="Tarefa.State" class="form-control" asp-items="Html.GetEnumSelectList<EstadoTarefa>()">
+            <option value="">Selecione</option>
+        </select>
+        <span asp-validation-for="Tarefa.State" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Tarefa.Data" class="form-label"></label>
+        <input asp-for="Tarefa.Data" class="form-control" type="date"
+            value="@Model.Tarefa.Data.ToString("yyyy-MM-dd")" />
+        <span asp-validation-for="Tarefa.Data" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Tarefa.UsuarioId" class="form-label">Usuário Responsável</label>
+        <select asp-for="Tarefa.UsuarioId" class="form-control">
+            <option value="">Selecione um usuário</option>
+            @foreach (var usuario in Model.Usuarios)
+            {
+                <option value="@usuario.Id">@usuario.Nome</option>
+            }
+        </select>
+        <span asp-validation-for="Tarefa.UsuarioId" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
