@@ -2,8 +2,9 @@
 
 @{
     ViewData["Title"] = "Gestão de Usuários";
-    var usuarioEdicao = ViewBag.UsuarioEdicao as gerenciadorTarefas.Models.UsuarioModel;
-    bool editando = usuarioEdicao != null;
+    var usuarioEdicao = ViewBag.UsuarioEdicao as gerenciadorTarefas.Models.UsuarioModel ?? new
+    gerenciadorTarefas.Models.UsuarioModel();
+    bool editando = usuarioEdicao.Id != 0;
 }
 
 <h3 class="text-center text-primary mb-4">@ViewData["Title"]</h3>
@@ -13,21 +14,17 @@
         @(editando ? "Editar Usuário" : "Cadastrar Novo Usuário")
     </div>
     <div class="card-body">
-        <form asp-action="SalvarUsuario" method="post">
-            @if (editando)
-            {
-                <input type="hidden" name="Id" value="@usuarioEdicao.Id" />
-            }
+        <form asp-action="SalvarUsuario" method="post" autocomplete="off">
+            <input type="hidden" asp-for="@usuarioEdicao.Id" name="Id" />
 
             <div class="mb-3">
-                <label class="form-label">Nome</label>
-                <input name="Nome" class="form-control" value="@(editando? usuarioEdicao.Nome: "")" required />
+                <label for="Nome" class="form-label">Nome</label>
+                <input name="Nome" class="form-control" value="@usuarioEdicao.Nome" required />
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Email</label>
-                <input name="Email" class="form-control" type="email" value="@(editando? usuarioEdicao.Email: "")"
-                    required />
+                <label for="Email" class="form-label">Email</label>
+                <input name="Email" class="form-control" type="email" value="@usuarioEdicao.Email" required />
             </div>
 
             <button type="submit" class="btn btn-success">
@@ -36,7 +33,7 @@
 
             @if (editando)
             {
-                <a asp-action="GestaoUsuario" class="btn btn-secondary ms-2">Cancelar</a>
+                <a asp-action="Usuarios" class="btn btn-secondary ms-2">Cancelar</a>
             }
         </form>
     </div>
@@ -57,7 +54,7 @@
                 <td>@usuario.Nome</td>
                 <td>@usuario.Email</td>
                 <td>
-                    <a asp-action="GestaoUsuario" asp-route-id="@usuario.Id" class="btn btn-sm btn-warning me-2">Editar</a>
+                    <a asp-action="EditarUsuario" asp-route-id="@usuario.Id" class="btn btn-sm btn-warning me-2">Editar</a>
                     <a asp-action="ExcluirUsuario" asp-route-id="@usuario.Id" class="btn btn-sm btn-danger"
                         onclick="return confirm('Tem certeza que deseja excluir este usuário?');">Excluir</a>
                 </td>

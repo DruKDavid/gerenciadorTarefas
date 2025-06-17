@@ -24,9 +24,10 @@ namespace gerenciadorTarefas.Models
     public string Prioridade { get; set; }
 
     [Required(ErrorMessage = "Informe o estado da tarefa")]
-    public EstadoTarefa State { get; set; }
+    public EstadoTarefa State { get; set; } = EstadoTarefa.AFazer;
 
-    public DateOnly Data { get; set; }
+
+        public DateOnly Data { get; set; }
 
     [Required(ErrorMessage = "Usuário responsável é obrigatório")]
     public int UsuarioId { get; set; }

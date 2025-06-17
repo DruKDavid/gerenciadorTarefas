@@ -2158,11 +2158,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\David\\Documents\\Projetos\\gerenciadorTarefas\\gerenciadorTarefas.csproj",
+      "projectUniqueName": "C:\\Users\\David\\Documents\\GitHub\\gerenciadorTarefas\\gerenciadorTarefas.csproj",
       "projectName": "gerenciadorTarefas",
-      "projectPath": "C:\\Users\\David\\Documents\\Projetos\\gerenciadorTarefas\\gerenciadorTarefas.csproj",
+      "projectPath": "C:\\Users\\David\\Documents\\GitHub\\gerenciadorTarefas\\gerenciadorTarefas.csproj",
       "packagesPath": "C:\\Users\\David\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\David\\Documents\\Projetos\\gerenciadorTarefas\\obj\\",
+      "outputPath": "C:\\Users\\David\\Documents\\GitHub\\gerenciadorTarefas\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\David\\AppData\\Roaming\\NuGet\\NuGet.Config"

@@ -31,12 +31,11 @@
     </div>
 
     <div class="mb-3">
-        <label asp-for="Tarefa.State" class="form-label"></label>
-        <select asp-for="Tarefa.State" class="form-control" asp-items="Html.GetEnumSelectList<EstadoTarefa>()">
-            <option value="">Selecione</option>
-        </select>
-        <span asp-validation-for="Tarefa.State" class="text-danger"></span>
+        <label class="form-label">Estado</label>
+        <input class="form-control" value="A Fazer" readonly />
+        <input type="hidden" asp-for="Tarefa.State" value="AFazer" />
     </div>
+
 
     <div class="mb-3">
         <label asp-for="Tarefa.Data" class="form-label"></label>

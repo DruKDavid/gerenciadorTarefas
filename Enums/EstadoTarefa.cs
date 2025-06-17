@@ -6,8 +6,8 @@ namespace gerenciadorTarefas.Enums
 {
     public enum EstadoTarefa
     {
-        AFazer,
-        Fazendo,
-        Pronto
+        AFazer = 0,
+        Fazendo = 1,
+        Pronto = 2
     }
 }
