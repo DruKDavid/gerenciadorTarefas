@@ -75,11 +75,11 @@ namespace gerenciadorTarefas.Controllers
         }
 
         // ==================== CRUD DE TAREFAS ====================
-         
+
         public IActionResult GestaoTarefa()
         {
-         var tarefas = _context.Tarefas.Include(t => t.Usuario).ToList();
-          return View(tarefas);
+            var tarefas = _context.Tarefas.Include(t => t.Usuario).ToList();
+            return View(tarefas);
         }
 
         public IActionResult Tarefas()
@@ -116,7 +116,7 @@ namespace gerenciadorTarefas.Controllers
 
             _context.Tarefas.Add(vm.Tarefa);
             _context.SaveChanges();
-            return RedirectToAction("Tarefas");
+            return RedirectToAction("GestaoTarefa");
         }
 
         // GET para editar tarefa
