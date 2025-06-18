@@ -14,7 +14,7 @@
         @(editando ? "Editar Usuário" : "Cadastrar Novo Usuário")
     </div>
     <div class="card-body">
-        <form asp-action="SalvarUsuario" method="post" autocomplete="off">
+        <form asp-action="CriarUsuario" method="post" autocomplete="off">
             <input type="hidden" asp-for="@usuarioEdicao.Id" name="Id" />
 
             <div class="mb-3">

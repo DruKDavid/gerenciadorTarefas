@@ -1,10 +1,20 @@
-@model List<gerenciadorTarefas.Models.TarefaModel>
+@model gerenciadorTarefas.ViewModels.GestaoTarefaViewModel
+@using gerenciadorTarefas.Enums
+
+@if (TempData["Mensagem"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+        @TempData["Mensagem"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+    </div>
+}
 
 @{
-    var tarefasAFazer = Model.Where(t => t.State == EstadoTarefa.AFazer).ToList();
-    var tarefasFazendo = Model.Where(t => t.State == EstadoTarefa.Fazendo).ToList();
-    var tarefasPronto = Model.Where(t => t.State == EstadoTarefa.Pronto).ToList();
+    var tarefasAFazer = Model.Tarefas.Where(t => t.State == EstadoTarefa.AFazer).ToList();
+    var tarefasFazendo = Model.Tarefas.Where(t => t.State == EstadoTarefa.Fazendo).ToList();
+    var tarefasPronto = Model.Tarefas.Where(t => t.State == EstadoTarefa.Pronto).ToList();
 }
+
 
 <div class="container">
     <div class="row g-4">
@@ -48,3 +58,79 @@
         </div>
     </div>
 </div>
+
+<!-- Modal de Edição de Tarefa -->
+<div class="modal fade" id="editarTarefaModal" tabindex="-1" aria-labelledby="editarTarefaLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form id="formEditarTarefa" asp-action="EditarTarefa" method="post">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editarTarefaLabel">Editar Tarefa</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" name="Tarefa.Id" id="editTarefaId" />
+
+          <div class="mb-3">
+            <label for="editDescricao" class="form-label">Descrição</label>
+            <input type="text" class="form-control" name="Tarefa.Descricao" id="editDescricao" required />
+          </div>
+
+          <div class="mb-3">
+            <label for="editSetor" class="form-label">Setor</label>
+            <input type="text" class="form-control" name="Tarefa.Setor" id="editSetor" />
+          </div>
+
+          <div class="mb-3">
+            <label for="editPrioridade" class="form-label">Prioridade</label>
+            <select class="form-select" name="Tarefa.Prioridade" id="editPrioridade">
+              <option>Baixa</option>
+              <option>Média</option>
+              <option>Alta</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="editUsuarioId" class="form-label">Responsável</label>
+            <select class="form-select" name="Tarefa.UsuarioId" id="editUsuarioId">
+              @foreach (var usuario in Model.Usuarios)
+              {
+               <option value="@usuario.Id">@usuario.Nome</option>
+              }
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="editState" class="form-label">Estado</label>
+            <select class="form-select" name="Tarefa.State" id="editState">
+              @foreach (var estado in Enum.GetValues(typeof(EstadoTarefa)))
+              {
+                  <option value="@estado">@estado</option>
+              }
+            </select>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Salvar alterações</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+@section Scripts {
+<script>
+    function abrirModalEdicao(id, descricao, setor, prioridade, usuarioId, estado) {
+        document.getElementById('editTarefaId').value = id;
+        document.getElementById('editDescricao').value = descricao;
+        document.getElementById('editSetor').value = setor;
+        document.getElementById('editPrioridade').value = prioridade;
+        document.getElementById('editUsuarioId').value = usuarioId;
+        document.getElementById('editState').value = estado;
+    }
+</script>
+}
+
+

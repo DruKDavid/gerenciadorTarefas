@@ -5,6 +5,7 @@
     <div class="card-body">
         <p><strong>Descrição:</strong> @Model.Descricao</p>
         <p><strong>Setor:</strong> @Model.Setor</p>
+        <p><strong>Responsável:</strong> @Model.Usuario?.Nome</p>
         <p>
             <strong>Prioridade:</strong>
             <span
@@ -25,7 +26,11 @@
             </select>
         </form>
 
-        <a asp-action="GestaoTarefa" asp-route-id="@Model.Id" class="btn btn-sm btn-primary">Editar</a>
+        <button type="button" class="btn btn-sm btn-primary"
+        onclick="abrirModalEdicao(@Model.Id, '@Model.Descricao', '@Model.Setor', '@Model.Prioridade', @Model.UsuarioId, '@Model.State')"
+        data-bs-toggle="modal" data-bs-target="#editarTarefaModal">
+        Editar
+        </button>
         <a asp-action="ExcluirTarefa" asp-route-id="@Model.Id" class="btn btn-sm btn-danger"
             onclick="return confirm('Tem certeza que deseja excluir esta tarefa?');">
             Excluir

@@ -1,5 +1,14 @@
 ﻿@model gerenciadorTarefas.Models.UsuarioModel
 
+@if (TempData["Mensagem"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+        @TempData["Mensagem"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+    </div>
+}
+
+
 @{
     ViewData["Title"] = "Cadastro Usuario";
 }
@@ -15,7 +24,7 @@
 
         <div class="form-group mt-3">
             <label asp-for="Email" class="form-label"></label>
-            <input asp-for="Email" class="form-control" placeholder="Digite seu email" />
+            <input type ="email" asp-for="Email" class="form-control" placeholder="Digite seu email" />
             <span asp-validation-for="Email" class="text-danger"></span>
         </div>
 

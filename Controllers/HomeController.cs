@@ -41,6 +41,8 @@ namespace gerenciadorTarefas.Controllers
 
             _context.Usuarios.Add(usuario);
             _context.SaveChanges();
+
+            TempData["Mensagem"] = "Usuário cadastrado com sucesso!";
             return RedirectToAction("Usuarios");
         }
 
@@ -78,9 +80,15 @@ namespace gerenciadorTarefas.Controllers
 
         public IActionResult GestaoTarefa()
         {
-            var tarefas = _context.Tarefas.Include(t => t.Usuario).ToList();
-            return View(tarefas);
+            var vm = new GestaoTarefaViewModel
+            {
+                Tarefas = _context.Tarefas.Include(t => t.Usuario).ToList(),
+                Usuarios = _context.Usuarios.ToList()
+            };
+
+            return View(vm);
         }
+
 
         public IActionResult Tarefas()
         {
@@ -116,8 +124,11 @@ namespace gerenciadorTarefas.Controllers
 
             _context.Tarefas.Add(vm.Tarefa);
             _context.SaveChanges();
-            return RedirectToAction("GestaoTarefa");
+
+            TempData["Mensagem"] = "Tarefa cadastrada com sucesso!";
+            return RedirectToAction("Tarefas");
         }
+
 
         // GET para editar tarefa
         public IActionResult EditarTarefa(int id)
@@ -145,6 +156,8 @@ namespace gerenciadorTarefas.Controllers
 
             _context.Tarefas.Update(vm.Tarefa);
             _context.SaveChanges();
+
+            TempData["Mensagem"] = "Tarefa atualizada com sucesso!";
             return RedirectToAction("GestaoTarefa");
         }
 
@@ -176,6 +189,17 @@ namespace gerenciadorTarefas.Controllers
             }
             return RedirectToAction("GestaoTarefa");
         }
+        public IActionResult DetalhesTarefa(int id)
+        {
+            var tarefa = _context.Tarefas
+                .Include(t => t.Usuario)
+                .FirstOrDefault(t => t.Id == id);
+
+            if (tarefa == null) return NotFound();
+
+            return View(tarefa);
+        }
+
 
         public IActionResult Index() => View();
 

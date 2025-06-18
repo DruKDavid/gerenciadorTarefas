@@ -1,5 +1,13 @@
 ﻿@model gerenciadorTarefas.ViewModels.TarefaUsuarioViewModel
 
+@if (TempData["Mensagem"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show mt-3" role="alert">
+        @TempData["Mensagem"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+    </div>
+}
+
 @{
     ViewData["Title"] = "Cadastro de Tarefas";
 }
